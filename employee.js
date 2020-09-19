@@ -13,7 +13,7 @@ var connection = mysql.createConnection({
     user: "root",
 
     // Your password
-    password: "Gurd253breen!",
+    password: "",
     database: "employeeTracker_db"
 });
 
@@ -85,6 +85,9 @@ function employeeByDepartment() {
 
 // Add Employee
 function addEmployee() {
+let roleQuery = connection.query("Select title, id from roles", function (err, results) {
+        if (err) throw err;
+        console.log(results);
     inquirer
         .prompt([
             {
@@ -105,22 +108,32 @@ function addEmployee() {
             },
 
         ]).then(function(answer) {
-            let query = connection.query(
-                "Insert into ((department INNER JOIN roles ON department.id = roles.id) INNER JOIN employee ON department.id = employee.id)", function (err, results) {
+            for (var i = 0; i < results.length; i++){
+                if(results[i].title === answer.title){
+                let roleId = results[i].id;
+                
+                connection.query(
+                "Insert into employees (first_name, last_name, role_id) Values (`${}`) ?", function (err, results) {
                     if (err) throw err,
-                    {
-                        first_name: answer.first_name,
-                        last_name: answer.last_name,
-                        title: answer.title
-                    },
+                    console.log([answer.first_name, answer.last_name, roleId])
+                    [{
+                            first_name: answer.first_name,
+                            last_name: answer.last_name,
+                            title: roleId
+                    }],
                         function (err) {
                             if (err) throw err;
 
                         };
-                        console.table(results);
+                        
                         start();
                     })
-                });
-};
+                }
+            }    
+        });
+}
+    )};
+
+
 
 
