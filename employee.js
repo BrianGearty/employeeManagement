@@ -110,29 +110,31 @@ function addEmployee() {
         ]).then(function(answer) {
             for (var i = 0; i < results.length; i++){
                 if(results[i].title === answer.title){
-                let roleId = results[i].id;
+                    let roleId = results[i].id;
                 
-                connection.query(
-                "Insert into employees (first_name, last_name, role_id) Values ?", function (err, results) {
-                    if (err) throw err,
                     console.log([answer.first_name, answer.last_name, roleId])
-                    [{
-                            first_name: answer.first_name,
-                            last_name: answer.last_name,
-                            role_id: roleId
-                        }],
-                        console.log(answer.first_name + " inserted"),
-                        function (err) {
-                            if (err) throw err;
-                        };
+                connection.query(
+                `Insert into employees (first_name, last_name, role_id) values (${answer.first_name}, ${answer.last_name}, ${answer.roleId})`, 
+                // {
+                //     first_name: answer.first_name,
+                //     last_name: answer.last_name,
+                //     role_id: roleId
+                // }, 
+                console.log([answer.first_name, answer.last_name, roleId]),
+                function (err, results) {
+                    if (err) throw err
+                    console.log(results.affectedRows + "employee inserted!\n");
+                        
+                    
                     })
                 }
             }    
             start();
-            console.log(answer.first_name + "inserted");
         });
-}
+    }
     )};
+
+
 
 
 
