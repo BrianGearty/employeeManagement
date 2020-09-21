@@ -13,7 +13,7 @@ var connection = mysql.createConnection({
     user: "root",
 
     // Your password
-    password: "",
+    password: "Gurd253breen!",
     database: "employeeTracker_db"
 });
 
@@ -63,7 +63,7 @@ function viewEmployee() {
     connection.query("SELECT * FROM employee", function (err, results) {
         if (err) throw err;
 
-        console.table(results);
+        console.log(results);
     })
 }
 // View All Roles
@@ -85,7 +85,7 @@ function employeeByDepartment() {
 
 // Add Employee
 function addEmployee() {
-let roleQuery = connection.query("Select title, id from roles", function (err, results) {
+    connection.query("Select title, id from roles", function (err, results) {
         if (err) throw err;
         console.log(results);
     inquirer
@@ -102,7 +102,7 @@ let roleQuery = connection.query("Select title, id from roles", function (err, r
             },
             {
                 type: 'list',
-                name: 'title',
+                name: 'role_id',
                 message: "What is employee's job title?",
                 choices: ['Sales Lead', 'Salesperson', 'Lead Engineer', 'Software Engineer', 'Account Manager', 'Accountant', 'Legal Team Lead', 'Lawyer']
             },
@@ -113,23 +113,23 @@ let roleQuery = connection.query("Select title, id from roles", function (err, r
                 let roleId = results[i].id;
                 
                 connection.query(
-                "Insert into employees (first_name, last_name, role_id) Values (`${}`) ?", function (err, results) {
+                "Insert into employees (first_name, last_name, role_id) Values ?", function (err, results) {
                     if (err) throw err,
                     console.log([answer.first_name, answer.last_name, roleId])
                     [{
                             first_name: answer.first_name,
                             last_name: answer.last_name,
-                            title: roleId
-                    }],
+                            role_id: roleId
+                        }],
+                        console.log(answer.first_name + " inserted"),
                         function (err) {
                             if (err) throw err;
-
                         };
-                        
-                        start();
                     })
                 }
             }    
+            start();
+            console.log(answer.first_name + "inserted");
         });
 }
     )};
