@@ -1,33 +1,40 @@
+const inquirer = require("inquirer");
+let employee = require("./employee.js");
+
+
+// Add Role
 function addRole(){
-
+    employee.start();
     inquirer
-    .prompt([
-        {
-            type: 'input',
-            name: 'first_name',
-            message: 'What is your first_name?'
-        },
-        {
-            type: 'list',
-            name: 'department_name',
-            message: 'What is their department',
-            choices: ['Legal' , 'Sales', 'Engineering', "Finance"]
-        }, 
-    
-    ]).then(function(answers) {
-        console.log('answers form prompt ??', answers)
-
-        // go to DB and get department ID!! we have the name from answer but we need id!! annother ocnnection.query!!
-
-        // SELECT * from department where anme = answer.department_name
-
-        connection.query("SELECT * FROM department where name =" + answers.department_name, function(err, deptRes) {
-            console.log('this is our id!!!', deptRes.id)
-            connection.query("Insert INTO roles (title,salary,department_id) VALUES (?,?,?)" ,['quality assurance' ,50000.00, 1], function(err, results) {
-                if (err) throw err;
-        
-                console.table(results);
-            });    
+        .prompt([
+            {
+                type: 'input',
+                name: 'roleTitle',
+                message: "What is the job title you would like to add?"
+            },
+            {
+                type: 'input',
+                name: 'salary',
+                message: "What is the salary of this job title?"
+            },
+            {
+                type: 'input',
+                name: 'department',
+                message: "What department would this job title fit under?"
+            }
+        ]).then(function (answer) {
+            connection.query('insert into department (name) values (?)', answer.department, function (err, results) {
+                    
+                        if (err) throw err;
+                    connection.query(`select * from department where name= ? `, answer.department,  function (err, res) {
+                        let department_id = res[0].id;
+                    connection.query("insert into roles (title, salary, department_id) values (?, ?, ?)", [answer.roleTitle, answer.salary, department_id], function (err, result){
+                        if (err) throw err;
+                        console.table(resuls)
+                    })
+                })
+            })
         })
-    })
-}
+    }
+
+    module.exports.addRole = addRole;
