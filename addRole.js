@@ -1,10 +1,9 @@
 const inquirer = require("inquirer");
-let employee = require("./employee.js");
+
 
 
 // Add Role
-function addRole(){
-    employee.start();
+function addRole(connection, start){
     inquirer
         .prompt([
             {
@@ -30,11 +29,12 @@ function addRole(){
                         let department_id = res[0].id;
                     connection.query("insert into roles (title, salary, department_id) values (?, ?, ?)", [answer.roleTitle, answer.salary, department_id], function (err, result){
                         if (err) throw err;
-                        console.table(resuls)
+                        console.table(results)
+                        start();
                     })
                 })
             })
         })
     }
 
-    module.exports.addRole = addRole;
+    module.exports = addRole;
