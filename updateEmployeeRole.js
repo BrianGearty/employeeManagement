@@ -1,29 +1,38 @@
 const inquirer = require("inquirer");
 
-console.log("suck me off")
-
 function updateEmployeeRole(connection, start) {
      connection.query("SELECT * FROM employee", function (err, res) {
-            
-            console.table(res);
-            if (err) throw err;
-        })
-        inquirer
-        .prompt({
-
-                name: 'employee',
-                type: 'list',
-                message: "Which employee's role woudld you like to update?",
-                choices: ["blowme", "suckme"]
+            for (var i = 0; i < res.length; i++){
+                res.forEach( function() {
+                    employeeList = [];
+                    // console.log(res[i].first_name)
+                    employeeList.res[i].first_name + " " + res[i].last_name
+                    console.log(employeeList.res[i].id)
                 
-            }).then(function (answer){
-            connection.query("Update roles where id= () set title = (?) ", function (err, result){
-                if (err) throw err;
-                console.log(result);
-                start();
+
+            if (err) throw err;
+
+            inquirer
+            .prompt({
+    
+                    name: 'employee',
+                    type: 'list',
+                    message: "Which employee's role woudld you like to update?",
+                    choices: employeeList
+                    
+                }).then(function (answer){
+                connection.query("UPDATE roles SET title = ? WHERE title = ? ", function (err, result){
+                    if (err) throw err;
+                    console.log(result);
+                    start();
+                })
+                })
             })
-        })
+        }
+    }
+)
 }
+
 
     
 // }

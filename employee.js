@@ -5,7 +5,7 @@ const viewEmployee = require("./viewEmployee.js");
 const viewAllRoles = require("./viewRoles.js");
 const employeeByDepartment = require("./employeeByDepartment.js");
 const addEmployee = require("./addEmployee.js");
-// const updateEmployeeRole = require("./updateEmployeeRole.js");
+const updateEmployeeRole = require("./updateEmployeeRole.js");
 
 
 
@@ -54,31 +54,4 @@ function start() {
         });
 }
 
-
-function updateEmployeeRole() {
-    connection.query("SELECT * FROM employee", function (err, res) {
-           
-           console.table(res);
-           if (err) throw err;
-        })
-        inquirer
-        .prompt({
-
-                name: 'employee',
-                type: 'list',
-                message: "Which employee's role would you like to update?",
-                choices: [res]
-                
-            }).then(function (answer){
-            connection.query("Update roles set title = (?)  ", function (err, result){
-                if (err) throw err;
-                console.log(result);
-                start();
-            })
-        })
-       }
-    
-    //    })
-
-
-// module.exports = start;
+module.exports = start;
