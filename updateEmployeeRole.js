@@ -2,12 +2,12 @@ const inquirer = require("inquirer");
 
 function updateEmployeeRole(connection, start) {
      connection.query("SELECT * FROM employee", function (err, res) {
-            for (var i = 0; i < res.length; i++){
+            // for (var i = 0; i < res.length; i++){
                 res.forEach( function() {
                     employeeList = [];
                     // console.log(res[i].first_name)
-                    employeeList.res[i].first_name + " " + res[i].last_name
-                    console.log(employeeList.res[i].id)
+                    // employeeList.res[i].first_name + " " + res[i].last_name
+                    console.log(res)
                 
 
             if (err) throw err;
@@ -28,7 +28,7 @@ function updateEmployeeRole(connection, start) {
                 })
                 })
             })
-        }
+        // }
     }
 )
 }
