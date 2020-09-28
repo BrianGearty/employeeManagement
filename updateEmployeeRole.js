@@ -1,5 +1,4 @@
 const inquirer = require("inquirer");
-const viewAllRoles = require("./viewRoles.js");
 
 employeeList = [];
 employeeRole = [];
@@ -7,12 +6,12 @@ employeeRole = [];
 function updateEmployeeRole(connection, start) {
     connection.query("SELECT * FROM employee", function (err, res) {
         for (var i = 0; i < res.length; i++) {
-            employeeList.push(res[i].role_id + " " + res[i].first_name + " " + res[i].last_name)
+            employeeList.push({name: res[i].first_name + " " + res[i].last_name, value: res[i].role_id})
             if (err) throw err;
         }
             connection.query("SELECT * FROM roles", function (err, resRoles) {
                 for (var i = 0; i < res.length; i++) {
-                    employeeRole.push(resRoles[i].title + " " + resRoles[i].id)
+                    employeeRole.push({ name: resRoles[i].title, value: resRoles[i].id })
                     
                     if (err) throw err;
                 }
@@ -29,12 +28,12 @@ function updateEmployeeRole(connection, start) {
                             {
                                 name: 'role',
                                 type: 'list',
-                                message: "What is this employees new role?",
+                                message: "What is this employees new job?",
                                 choices: employeeRole
                             }
 
                         ]).then(function (answer) {
-                            connection.query("UPDATE roles SET title = ? WHERE id = ? ", [answer.role, answer.employee], function (err, result) {
+                            connection.query("UPDATE roles SET id = ? WHERE id = ? ", [answer.role, answer.employee], function (err, result) {
                                 if (err) throw err;
                                 console.log(result);
                                 start();
