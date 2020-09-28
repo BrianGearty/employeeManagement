@@ -1,5 +1,5 @@
 // View All Roles
-function viewAllRoles(connection, start, Results) {
+function viewAllRoles(connection, start) {
     connection.query("SELECT * FROM roles", function (err, res) {
         if (err) throw err;
 
