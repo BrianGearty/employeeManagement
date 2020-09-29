@@ -6,7 +6,7 @@ employeeRole = [];
 function updateEmployeeRole(connection, start) {
     connection.query("SELECT * FROM employee", function (err, res) {
         for (var i = 0; i < res.length; i++) {
-            employeeList.push({name: res[i].first_name + " " + res[i].last_name, value: res[i].role_id})
+            employeeList.push({name: res[i].first_name + " " + res[i].last_name, value: res[i].id})
             if (err) throw err;
         }
             connection.query("SELECT * FROM roles", function (err, resRoles) {
@@ -33,7 +33,8 @@ function updateEmployeeRole(connection, start) {
                             }
 
                         ]).then(function (answer) {
-                            connection.query("UPDATE roles SET id = ? WHERE id = ? ", [answer.role, answer.employee], function (err, result) {
+                            console.log([answer.role, answer.employee])
+                            connection.query("UPDATE employee SET role_id = ? WHERE id = ? ", [answer.role, answer.employee], function (err, result) {
                                 if (err) throw err;
                                 console.log(result);
                                 start();
