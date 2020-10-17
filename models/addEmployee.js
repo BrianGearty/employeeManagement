@@ -1,7 +1,7 @@
 const inquirer = require("inquirer");
 
 // Add Employee
-function addEmployee() {
+function addEmployee(connection, start) {
     inquirer
         .prompt([
             {

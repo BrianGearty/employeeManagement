@@ -1,11 +1,11 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-const addRole = require("./addRole.js");
-const viewEmployee = require("./viewEmployee.js");
-const viewAllRoles = require("./viewRoles.js");
-const employeeByDepartment = require("./employeeByDepartment.js");
-const addEmployee = require("./addEmployee.js");
-const updateEmployeeRole = require("./updateEmployeeRole.js");
+const addRole = require("./models/addRole.js");
+const viewEmployee = require("./models/viewEmployee.js");
+const viewAllRoles = require("./models/viewRoles.js");
+const employeeByDepartment = require("./models/employeeByDepartment.js");
+const addEmployee = require("./models/addEmployee.js");
+const updateEmployeeRole = require("./models/updateEmployeeRole.js");
 
 
 

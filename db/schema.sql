@@ -9,8 +9,7 @@ create table employee (
 id int not null auto_increment,
 first_name varchar(30) not null,
 last_name varchar(30) not null,
-role_id int not null,
-manager_id int null,
+role_id int not null
 
 primary key (id),
 foreign key (role_id) references roles(id)
@@ -30,8 +29,7 @@ create table roles (
     department_id int not null,
 
     primary key (id),
-    foreign key (department_id) references department(id)
-
+    foreign key (department_id) references department(id),
 );
 
 
